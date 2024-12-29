@@ -1,27 +1,39 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <vector>
+#include <string>
 using namespace std;
 
-double generateRandomDouble(double min, double max) {
-    return min + (rand() / (RAND_MAX / (max - min)));
-}
+struct Ville {
+    string nom;
+    double latitude;
+    double longitude;
+};
 
-int generateRandomInt(int min, int max) {
-    return min + rand() % (max - min + 1);
+void rechercherVilleParNom(const vector<Ville>& villes, const string& nom) {
+    for (const auto& ville : villes) {
+        if (ville.nom == nom) {
+            cout << "La ville " << nom << " se situe à : "
+                 << "Latitude: " << ville.latitude << ", "
+                 << "Longitude: " << ville.longitude << endl;
+            return;
+        }
+    }
+    cout << "Ville non trouvée !" << endl;
 }
 
 int main() {
-    srand(time(0));
-    for (int i = 0; i < 5; i++) {
-        cout << generateRandomDouble(1.0, 10.0) << " ";
-    }
-    cout << endl;
+    vector<Ville> villes = {
+        {"Tunis", 36.8065, 10.1815},
+        {"Sfax", 34.7406, 10.7602},
+        {"Sousse", 35.8256, 10.6369},
+        {"Kairouan", 35.6786, 9.8761},
+    };
 
-    for (int i = 0; i < 5; i++) {
-        cout << generateRandomInt(1, 100) << " ";
-    }
-    cout << endl;
+    string villeRecherchee;
+    cout << "Entrez le nom de la ville à rechercher : ";
+    cin >> villeRecherchee;
+
+    rechercherVilleParNom(villes, villeRecherchee);
 
     return 0;
 }

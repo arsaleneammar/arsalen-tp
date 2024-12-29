@@ -1,47 +1,43 @@
 #include <iostream>
-#include <cstdlib>
+#include <vector>
 using namespace std;
 
-void addition(int a, int b, int& resultat) {
-    resultat = a + b;
+void remplir(vector<int>& tableau, int N) {
+    tableau.resize(N);
+    for (int i = 0; i < N; ++i) {
+        cin >> tableau[i];
+    }
 }
 
-void soustraction(int a, int b, int& resultat) {
-    resultat = a - b;
-}
+pair<int, int> mini_maxi(const vector<int>& tableau) {
+    int minVal = tableau[0];
+    int maxVal = tableau[0];
 
-void multiplication(int a, int b, int& resultat) {
-    resultat = a * b;
-}
+    for (size_t i = 1; i < tableau.size(); ++i) {
+        if (tableau[i] < minVal) {
+            minVal = tableau[i];
+        }
+        if (tableau[i] > maxVal) {
+            maxVal = tableau[i];
+        }
+    }
 
-void division(int a, int b, double& resultat) {
-    if (b != 0) resultat = (double)a / b;
-    else cout << "Division par zéro impossible." << endl;
+    return make_pair(minVal, maxVal);
 }
 
 int main() {
-    int a, b, resultat;
-    double resultatDiv;
-    int choix;
-    do {
-        system("cls");
-        cout << "1. Addition\n2. Soustraction\n3. Multiplication\n4. Division\n5. Quitter\n";
-        cout << "Choisissez une opération: ";
-        cin >> choix;
+    int N;
+    cout << "Entrez la taille du tableau : ";
+    cin >> N;
 
-        if (choix == 5) break;
+    vector<int> tableau;
+    cout << "Entrez " << N << " valeurs entières :\n";
+    remplir(tableau, N);
 
-        cout << "Entrez a et b: ";
-        cin >> a >> b;
+    pair<int, int> result = mini_maxi(tableau);
 
-        switch (choix) {
-            case 1: addition(a, b, resultat); cout << "Résultat: " << resultat << endl; break;
-            case 2: soustraction(a, b, resultat); cout << "Résultat: " << resultat << endl; break;
-            case 3: multiplication(a, b, resultat); cout << "Résultat: " << resultat << endl; break;
-            case 4: division(a, b, resultatDiv); cout << "Résultat: " << resultatDiv << endl; break;
-            default: cout << "Choix invalide." << endl;
-        }
-    } while (true);
+    cout << "La plus petite valeur est : " << result.first << endl;
+    cout << "La plus grande valeur est : " << result.second << endl;
 
     return 0;
 }

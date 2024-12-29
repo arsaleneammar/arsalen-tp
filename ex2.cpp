@@ -1,26 +1,42 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-void testEgaliteValeur(int a, int b) {
-    if (a == b) cout << "Les entiers sont égaux (passage par valeur)." << endl;
-    else cout << "Les entiers ne sont pas égaux (passage par valeur)." << endl;
+void remplir(vector<int>& tableau, int N) {
+    tableau.resize(N);
+    for (int i = 0; i < N; ++i) {
+        cin >> tableau[i];
+    }
 }
 
-void testEgaliteAdresse(int* a, int* b) {
-    if (*a == *b) cout << "Les entiers sont égaux (passage par adresse)." << endl;
-    else cout << "Les entiers ne sont pas égaux (passage par adresse)." << endl;
-}
-
-void testEgaliteReference(int& a, int& b) {
-    if (a == b) cout << "Les entiers sont égaux (passage par référence)." << endl;
-    else cout << "Les entiers ne sont pas égaux (passage par référence)." << endl;
+void recherche(const vector<int>& tableau, int V) {
+    bool trouve = false;
+    for (size_t i = 0; i < tableau.size(); ++i) {
+        if (tableau[i] == V) {
+            cout << "V se trouve dans le tableau à la position " << i << endl;
+            trouve = true;
+            break;
+        }
+    }
+    if (!trouve) {
+        cout << "V ne se trouve pas dans le tableau" << endl;
+    }
 }
 
 int main() {
-    int a = 10, b = 10;
-    testEgaliteValeur(a, b);
-    testEgaliteAdresse(&a, &b);
-    testEgaliteReference(a, b);
+    int N;
+    cout << "Entrez la taille du tableau: ";
+    cin >> N;
+
+    vector<int> tableau;
+    cout << "Entrez " << N << " valeurs entières :\n";
+    remplir(tableau, N);
+
+    int V;
+    cout << "Entrez la valeur à rechercher: ";
+    cin >> V;
+
+    recherche(tableau, V);
 
     return 0;
 }

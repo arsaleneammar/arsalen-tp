@@ -1,20 +1,34 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
+void remplirTableau(vector<int>& tableau, int taille) {
+    for (int i = 0; i < taille; ++i) {
+        cin >> tableau[i];
+    }
+}
+
+int compterPositifs(const vector<int>& tableau) {
+    int count = 0;
+    for (int val : tableau) {
+        if (val > 0) {
+            ++count;
+        }
+    }
+    return count;
+}
+
 int main() {
-    int entier = 5;
-    cout << entier << " à l'adresse: " << &entier << endl;
+    int taille = 10;
+    vector<int> tableau(taille);
 
-    int* pEntier = new int(10);
-    cout << *pEntier << " à l'adresse: " << pEntier << endl;
-    delete pEntier;
+    cout << "Entrez " << taille << " valeurs :\n";
+    remplirTableau(tableau, taille);
 
-    double reel = 3.14;
-    cout << reel << " à l'adresse: " << &reel << endl;
+    int positives = compterPositifs(tableau);
 
-    double* pReel = new double(6.28);
-    cout << *pReel << " à l'adresse: " << pReel << endl;
-    delete pReel;
+    cout << "Nombre de valeurs positives : " << positives << endl;
 
     return 0;
 }
+
