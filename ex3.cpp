@@ -2,34 +2,51 @@
 #include <vector>
 using namespace std;
 
-int produitScalaire(const vector<int>& U, const vector<int>& V) {
-    int resultat = 0;
-    for (size_t i = 0; i < U.size(); ++i) {
-        resultat += U[i] * V[i];
+void appliquerFiltre(vector<int>& vec, function<void(int&, int)> filtre) {
+    int seuil = 0;
+    if (filtre.target<void(*)(int&, int)>() == greaterThan) {
+        cout << "Donner seuil: ";
+        cin >> seuil;
     }
-    return resultat;
+    for (int& e : vec) {
+        filtre(e, seuil);
+    }
 }
 
 int main() {
-    int taille;
-    cout << "Entrez la dimension des vecteurs : ";
-    cin >> taille;
+    vector<int> tab{ -2, 3, -33, 7, 99, 6, 2, -39 };
 
-    vector<int> U(taille), V(taille);
+    auto afficherPositif = [](int& x, int seuil = 0) {
+        if (x >= 0)
+            cout << x << "\t";
+    };
 
-    cout << "Entrez les elements du vecteur U :\n";
-    for (int i = 0; i < taille; ++i) {
-        cin >> U[i];
+    auto afficherNegatif = [](int& x, int seuil = 0) {
+        if (x < 0)
+            cout << x << "\t";
+    };
+
+    auto superieurA = [](int& x, int seuil) {
+        if (x >= seuil)
+            cout << x << "\t";
+    };
+
+    cout << "************************\n";
+    cout << "* 1. Afficher positif *\n";
+    cout << "* 2. Afficher Negatif *\n";
+    cout << "* 3. Superieur A      *\n";
+    cout << "************************\n";
+    cout << "Entrez votre choix? ";
+
+    int choix;
+    cin >> choix;
+
+    switch (choix) {
+        case 1: appliquerFiltre(tab, afficherPositif); break;
+        case 2: appliquerFiltre(tab, afficherNegatif); break;
+        case 3: appliquerFiltre(tab, superieurA); break;
+        default: break;
     }
-
-    cout << "Entrez les elements du vecteur V :\n";
-    for (int i = 0; i < taille; ++i) {
-        cin >> V[i];
-    }
-
-    int resultat = produitScalaire(U, V);
-
-    cout << "Le produit scalaire de U et V est : " << resultat << endl;
 
     return 0;
 }

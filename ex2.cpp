@@ -2,41 +2,47 @@
 #include <vector>
 using namespace std;
 
-void remplir(vector<int>& tableau, int N) {
-    tableau.resize(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> tableau[i];
-    }
+void afficherP(int& x, int seuil = 0) {
+    if (x >= 0)
+        cout << x << "\t";
 }
 
-void recherche(const vector<int>& tableau, int V) {
-    bool trouve = false;
-    for (size_t i = 0; i < tableau.size(); ++i) {
-        if (tableau[i] == V) {
-            cout << "V se trouve dans le tableau à la position " << i << endl;
-            trouve = true;
-            break;
-        }
+void afficherN(int& x, int seuil = 0) {
+    if (x < 0)
+        cout << x << "\t";
+}
+
+void greaterThan(int& x, int seuil) {
+    if (x >= seuil)
+        cout << x << "\t";
+}
+
+void appliquerFiltre(vector<int>& vec, void(*filtre)(int&, int)) {
+    int seuil = 0;
+    if (filtre == greaterThan) {
+        cout << "Donner seuil: ";
+        cin >> seuil;
     }
-    if (!trouve) {
-        cout << "V ne se trouve pas dans le tableau" << endl;
+    for (int& e : vec) {
+        filtre(e, seuil);
     }
 }
 
 int main() {
-    int N;
-    cout << "Entrez la taille du tableau: ";
-    cin >> N;
-
-    vector<int> tableau;
-    cout << "Entrez " << N << " valeurs entières :\n";
-    remplir(tableau, N);
-
-    int V;
-    cout << "Entrez la valeur à rechercher: ";
-    cin >> V;
-
-    recherche(tableau, V);
-
+    vector<int> tab{ -2, 3, -33, 7, 99, 6, 2, -39 };
+    cout << "************************\n";
+    cout << "* 1. Afficher positif *\n";
+    cout << "* 2. Afficher Negatif *\n";
+    cout << "* 3. Superieur A      *\n";
+    cout << "************************\n";
+    cout << "Entrez votre choix? ";
+    int choix;
+    cin >> choix;
+    switch (choix) {
+        case 1: appliquerFiltre(tab, afficherP); break;
+        case 2: appliquerFiltre(tab, afficherN); break;
+        case 3: appliquerFiltre(tab, greaterThan); break;
+        default: break;
+    }
     return 0;
 }

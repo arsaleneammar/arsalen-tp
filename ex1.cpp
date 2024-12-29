@@ -1,33 +1,49 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void remplirTableau(vector<int>& tableau, int taille) {
-    for (int i = 0; i < taille; ++i) {
-        cin >> tableau[i];
+template <typename T>
+void echanger(T& a, T& b) {
+    T temp = a;
+    a = b;
+    b = temp;
+}
+
+template <typename T>
+void trier(T tableau[], int taille) {
+    for (int i = 0; i < taille - 1; ++i) {
+        int indexMin = i;
+        for (int j = i + 1; j < taille; ++j) {
+            if (tableau[j] < tableau[indexMin]) {
+                indexMin = j;
+            }
+        }
+        echanger(tableau[i], tableau[indexMin]);
     }
 }
 
-int compterPositifs(const vector<int>& tableau) {
-    int count = 0;
-    for (int val : tableau) {
-        if (val > 0) {
-            ++count;
-        }
+template <typename T>
+void afficherTableau(T tableau[], int taille) {
+    for (int i = 0; i < taille; ++i) {
+        cout << tableau[i] << " ";
     }
-    return count;
+    cout << endl;
 }
 
 int main() {
-    int taille = 10;
-    vector<int> tableau(taille);
+    int tableauInt[10] = {34, 7, 23, 32, 5, 62, 19, 18, 47, 3};
+    afficherTableau(tableauInt, 10);
+    trier(tableauInt, 10);
+    afficherTableau(tableauInt, 10);
 
-    cout << "Entrez " << taille << " valeurs :\n";
-    remplirTableau(tableau, taille);
+    float tableauFloat[10] = {3.4, 7.2, 2.3, 3.2, 5.1, 6.2, 1.9, 1.8, 4.7, 0.3};
+    afficherTableau(tableauFloat, 10);
+    trier(tableauFloat, 10);
+    afficherTableau(tableauFloat, 10);
 
-    int positives = compterPositifs(tableau);
-
-    cout << "Nombre de valeurs positives : " << positives << endl;
+    char tableauChar[10] = {'z', 'h', 'a', 'm', 'c', 'x', 'b', 'y', 'k', 'p'};
+    afficherTableau(tableauChar, 10);
+    trier(tableauChar, 10);
+    afficherTableau(tableauChar, 10);
 
     return 0;
 }

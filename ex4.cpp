@@ -1,43 +1,30 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void remplir(vector<int>& tableau, int N) {
-    tableau.resize(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> tableau[i];
+struct Produit {
+    string type;
+    double prixHT;
+    bool solde;
+};
+
+double calculerPrix(const Produit& p) {
+    double tauxTaxe = (p.type == "luxe") ? 0.25 : 0.19;
+    double prixTTC = p.prixHT * (1 + tauxTaxe);
+    if (p.solde) {
+        prixTTC *= 0.80;
     }
-}
-
-pair<int, int> mini_maxi(const vector<int>& tableau) {
-    int minVal = tableau[0];
-    int maxVal = tableau[0];
-
-    for (size_t i = 1; i < tableau.size(); ++i) {
-        if (tableau[i] < minVal) {
-            minVal = tableau[i];
-        }
-        if (tableau[i] > maxVal) {
-            maxVal = tableau[i];
-        }
-    }
-
-    return make_pair(minVal, maxVal);
+    return prixTTC;
 }
 
 int main() {
-    int N;
-    cout << "Entrez la taille du tableau : ";
-    cin >> N;
-
-    vector<int> tableau;
-    cout << "Entrez " << N << " valeurs entières :\n";
-    remplir(tableau, N);
-
-    pair<int, int> result = mini_maxi(tableau);
-
-    cout << "La plus petite valeur est : " << result.first << endl;
-    cout << "La plus grande valeur est : " << result.second << endl;
+    Produit produit1 = {"luxe", 100.0, false};
+    Produit produit2 = {"standard", 50.0, true};
+    Produit produit3 = {"luxe", 200.0, true};
+    Produit produit4 = {"standard", 75.0, false};
+    cout << "Prix du produit 1 (luxe sans solde): " << calculerPrix(produit1) << " €" << endl;
+    cout << "Prix du produit 2 (standard soldé): " << calculerPrix(produit2) << " €" << endl;
+    cout << "Prix du produit 3 (luxe soldé): " << calculerPrix(produit3) << " €" << endl;
+    cout << "Prix du produit 4 (standard sans solde): " << calculerPrix(produit4) << " €" << endl;
 
     return 0;
 }
